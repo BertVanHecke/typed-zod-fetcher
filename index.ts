@@ -56,11 +56,16 @@ async function request<TResponseSchema extends z.Schema>(
  */
 export async function _get<TResponseSchema extends z.Schema>(
   url: string,
-  responseSchema: TResponseSchema
+  responseSchema: TResponseSchema,
+  apiKey: string
 ): Promise<z.infer<TResponseSchema>> {
   return request<TResponseSchema>(
     url,
-    { method: HTTPMethods.GET, cache: "no-store" },
+    {
+      method: HTTPMethods.GET,
+      cache: "no-store",
+      headers: { "X-API-KEY": apiKey },
+    },
     responseSchema
   );
 }
